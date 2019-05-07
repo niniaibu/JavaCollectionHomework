@@ -1,6 +1,5 @@
 package com.thoughtworks.collection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,33 +12,18 @@ public class Filter {
     }
 
     public List<Integer> filterEven() {
-        List<Integer> resultList = array.stream().filter(integer -> integer % 2 == 0).collect(Collectors.toList());
-        return resultList;
+        return array.stream().filter(integer -> integer % 2 == 0).collect(Collectors.toList());
     }
 
     public List<Integer> filterMultipleOfThree() {
-        List<Integer> resultList = array.stream().filter(integer -> integer % 3 == 0).collect(Collectors.toList());
-        return resultList;
+        return array.stream().filter(integer -> integer % 3 == 0).collect(Collectors.toList());
     }
 
     public List<Integer> getCommonElements(List<Integer> firstList, List<Integer> secondList) {
-        List<Integer> resultList = new ArrayList<>();
-        for (Integer first : firstList) {
-            if (secondList.contains(first)) {
-                resultList.add(first);
-            }
-
-        }
-        return resultList;
+        return firstList.stream().filter(secondList::contains).collect(Collectors.toList());
     }
 
     public List<Integer> getDifferentElements() {
-        List<Integer> resultList = new ArrayList<>();
-        for (Integer integer : array) {
-            if (!resultList.contains(integer)) {
-                resultList.add(integer);
-            }
-        }
-        return resultList;
+        return array.stream().distinct().collect(Collectors.toList());
     }
 }

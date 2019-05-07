@@ -18,44 +18,36 @@ public class MyMap {
     }
 
     public List<Integer> getTriple() {
-        List<Integer> result = array.stream().map(n -> n * 3).collect(Collectors.toList());
-        return result;
+        return array.stream().map(n -> n * 3).collect(Collectors.toList());
     }
 
     public List<String> mapLetter() {
-        List<String> result = new ArrayList<>();
-        for (Integer integer : array) {
-            result.add(letterList.get(integer - 1));
-        }
-        return result;
+        return array.stream().map(integer -> letterList.get(integer - 1)).collect(Collectors.toList());
     }
 
     public List<String> mapLetters() {
-        List<String> result = new ArrayList<>();
-        for (Integer integer : array) {
-            int multiple = integer / 26;
-            if (multiple > 0) {
-                int index = integer - 26 * multiple - 1;
-                if (index < 0) {
-                    index += 26;
-                    multiple -= 1;
-                }
-                String lastString = letterList.get(multiple - 1) + letterList.get(index);
-                result.add(lastString);
-            } else {
-                result.add(letterList.get(integer - 1));
-            }
+        return array.stream().map(this::numberConverter).collect(Collectors.toList());
+    }
+
+    private String numberConverter(int number) {
+        int unitOfNumber = number % 26 - 1;
+        int multiple = number / 26;
+        if (unitOfNumber < 0) {
+            multiple -= 1;
+            unitOfNumber += 26;
         }
-        return result;
+        String numberConverterToString = letterList.get(unitOfNumber);
+        if (multiple != 0) {
+            return letterList.get(multiple - 1) + numberConverterToString;
+        }
+        return numberConverterToString;
     }
 
     public List<Integer> sortFromBig() {
-        List<Integer> result = array.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-        return result;
+        return array.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
     }
 
     public List<Integer> sortFromSmall() {
-        List<Integer> result = array.stream().sorted().collect(Collectors.toList());
-        return result;
+        return array.stream().sorted().collect(Collectors.toList());
     }
 }
